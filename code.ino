@@ -59,7 +59,8 @@ int calcLEDDelay()
   }
   else
   {
-    sensorValue - sensitivity;
+    float scale = 1 - ((sensorValue - sensitivity)/(maxSensorVal-sensitivity));
+    return (maxSensorVal - (scale*(maxBlinkDelay-minBlinkDelay)));
   }
 }
 
@@ -71,6 +72,10 @@ void loop()
   if (wet())
   {
     digitalWrite(LED_BUILTIN, HIGH);
+    int delay_time = calcLEDDelay();
+    delay(delay_time);                     // wait for a second
+    digitalWrite(LED_BUILTIN, LOW);  // turn the LED off by making the voltage LOW
+    delay(delay_time);
   }
 
   digitalWrite(LED_BUILTIN, HIGH); // turn the LED on (HIGH is the voltage level)

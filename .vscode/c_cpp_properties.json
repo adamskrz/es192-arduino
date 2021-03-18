@@ -3,14 +3,14 @@
         {
             "name": "Linux",
             "includePath": [
-                "/home/adams/Downloads/arduino-1.8.6/tools/**",
-                "/home/adams/Arduino/libraries/**",
-                "/home/adams/Downloads/arduino-1.8.6/libraries/**",
-                "/home/adams/Downloads/arduino-1.8.6/hardware/tools/**",
-                "/home/adams/Downloads/arduino-1.8.6/hardware/arduino/avr/**"
+                "/dcs/20/u2012758/arduino/arduino-1.8.6/hardware/arduino/avr/**",
+                "/dcs/20/u2012758/arduino/arduino-1.8.6/hardware/tools/**",
+                "/dcs/20/u2012758/arduino/arduino-1.8.6/libraries/**",
+                "/dcs/20/u2012758/Arduino/libraries/**",
+                "/dcs/20/u2012758/arduino/arduino-1.8.6/tools/**"
             ],
             "forcedInclude": [
-                "/home/adams/Downloads/arduino-1.8.6/hardware/arduino/avr/cores/arduino/Arduino.h"
+                "/dcs/20/u2012758/arduino/arduino-1.8.6/hardware/arduino/avr/cores/arduino/Arduino.h"
             ],
             "defines": [
                 "USBCON"

@@ -6,6 +6,10 @@ const byte sensorPin = A0;
 const byte batteryPin = A1;
 int sensorValue = 0;
 int sensitivity;
+const byte batteryPin1 = 8;
+const byte batteryPin2 = 9;
+const byte batteryPin3 = 10;
+const byte batteryPin4 = 11;
 
 // the setup function runs once when you press reset or power the board
 void setup() {
@@ -14,10 +18,10 @@ void setup() {
   pinMode(sensorPin, INPUT); // initialise sensor connection as input
   pinMode(batteryPin, INPUT); // initialise sensor connection as input 
 
-  pinMode(0, OUTPUT); // Battery LEDs
-  pinMode(1, OUTPUT);
-  pinMode(2, OUTPUT);
-  pinMode(3, OUTPUT);
+  pinMode(batteryPin1, OUTPUT); // Battery LEDs
+  pinMode(batteryPin2, OUTPUT);
+  pinMode(batteryPin3, OUTPUT);
+  pinMode(batteryPin4, OUTPUT);
 
   float sensorValue = 0;
   const byte sensorPin = A0;
@@ -48,25 +52,25 @@ int readIntFromEEPROM(int address) {
 void displayBatteryLevel() {
   float voltage = (9 * analogRead(batteryPin)) / 1024;
   if (voltage < 6) {
-    digitalWrite(LED_BUILTIN, HIGH);
-    digitalWrite(LED_BUILTIN, LOW);
-    digitalWrite(LED_BUILTIN, LOW);
-    digitalWrite(LED_BUILTIN, LOW);
+    digitalWrite(batteryPin1, HIGH);
+    digitalWrite(batteryPin2, LOW);
+    digitalWrite(batteryPin3, LOW);
+    digitalWrite(batteryPin4, LOW);
   } else if (voltage < 7) {
-    digitalWrite(LED_BUILTIN, HIGH);
-    digitalWrite(LED_BUILTIN, HIGH);
-    digitalWrite(LED_BUILTIN, LOW);
-    digitalWrite(LED_BUILTIN, LOW);
+    digitalWrite(batteryPin1, HIGH);
+    digitalWrite(batteryPin2, HIGH);
+    digitalWrite(batteryPin3, LOW);
+    digitalWrite(batteryPin4, LOW);
   } else if (voltage < 7.5) {
-    digitalWrite(LED_BUILTIN, HIGH);
-    digitalWrite(LED_BUILTIN, HIGH);
-    digitalWrite(LED_BUILTIN, HIGH);
-    digitalWrite(LED_BUILTIN, LOW);
+    digitalWrite(batteryPin1, HIGH);
+    digitalWrite(batteryPin2, HIGH);
+    digitalWrite(batteryPin3, HIGH);
+    digitalWrite(batteryPin4, LOW);
   } else {
-    digitalWrite(LED_BUILTIN, HIGH);
-    digitalWrite(LED_BUILTIN, HIGH);
-    digitalWrite(LED_BUILTIN, HIGH);
-    digitalWrite(LED_BUILTIN, HIGH);
+    digitalWrite(batteryPin1, HIGH);
+    digitalWrite(batteryPin2, HIGH);
+    digitalWrite(batteryPin3, HIGH);
+    digitalWrite(batteryPin4, HIGH);
   }
 
   delay (1000);

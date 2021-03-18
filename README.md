@@ -4,6 +4,6 @@ This repo contains Arduino code for my Electronics Sprint Porject for ES192 Engi
 
 ## To-Do
 
-- [ ] Battery Indicator
+- [x] Battery Indicator
 - [ ] Button press alarm interupt
 - [x] Calibration Process - store to EEPROM

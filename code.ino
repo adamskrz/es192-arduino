@@ -2,15 +2,23 @@
 
 // Global
 const byte sensorPin = A0;
-const byte sensitivtyPin = A1;
+// const byte sensitivtyPin = A1;
+const byte batteryPin = A1;
 int sensorValue = 0;
 int sensitivity;
 
 // the setup function runs once when you press reset or power the board
 void setup() {
-  // initialize digital pin LED_BUILTIN as an output.
-  pinMode(LED_BUILTIN, OUTPUT);
-  pinMode(A0, INPUT);
+  pinMode(LED_BUILTIN, OUTPUT); // initialise digital pin LED_BUILTIN as an output.
+  
+  pinMode(sensorPin, INPUT); // initialise sensor connection as input
+  pinMode(batteryPin, INPUT); // initialise sensor connection as input 
+
+  pinMode(0, OUTPUT); // Battery LEDs
+  pinMode(1, OUTPUT);
+  pinMode(2, OUTPUT);
+  pinMode(3, OUTPUT);
+
   float sensorValue = 0;
   const byte sensorPin = A0;
 
@@ -35,6 +43,35 @@ int readIntFromEEPROM(int address) {
   byte byte2 = EEPROM.read(address + 1);
   return (byte1 << 8) + byte2;
 }
+
+// Battery discharge reference https://www.powerstream.com/z/9v-100ma-discharge-tests.png
+void displayBatteryLevel() {
+  float voltage = (9 * analogRead(batteryPin)) / 1024;
+  if (voltage < 6) {
+    digitalWrite(LED_BUILTIN, HIGH);
+    digitalWrite(LED_BUILTIN, LOW);
+    digitalWrite(LED_BUILTIN, LOW);
+    digitalWrite(LED_BUILTIN, LOW);
+  } else if (voltage < 7) {
+    digitalWrite(LED_BUILTIN, HIGH);
+    digitalWrite(LED_BUILTIN, HIGH);
+    digitalWrite(LED_BUILTIN, LOW);
+    digitalWrite(LED_BUILTIN, LOW);
+  } else if (voltage < 7.5) {
+    digitalWrite(LED_BUILTIN, HIGH);
+    digitalWrite(LED_BUILTIN, HIGH);
+    digitalWrite(LED_BUILTIN, HIGH);
+    digitalWrite(LED_BUILTIN, LOW);
+  } else {
+    digitalWrite(LED_BUILTIN, HIGH);
+    digitalWrite(LED_BUILTIN, HIGH);
+    digitalWrite(LED_BUILTIN, HIGH);
+    digitalWrite(LED_BUILTIN, HIGH);
+  }
+
+  delay (1000);
+}
+
 
 int getSensorValue() {
   // Get a sensor value as an average of 10 readings over the course of 0.1

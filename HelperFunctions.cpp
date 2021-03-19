@@ -1,20 +1,21 @@
-#include "eeprom_helpers.h"
 #include "HelperFunctions.h"
+#include "eeprom_helpers.h"
 
 // Declare variables from main sketch
-// Global
+
+// Constants (pins)
 const byte sensorPin = A0;
-// const byte sensitivtyPin = A1;
 const byte batteryPin = A1;
-int sensitivity;
 const byte batteryLEDPin[] = {8, 9, 10, 11};
 const byte batteryButtonPin = 2;
 const byte resetButtonPin = 3;
 
+// Very rarely set so keeping as global
+int sensitivity;
+
 // Battery discharge reference
 // https://www.powerstream.com/z/9v-100ma-discharge-tests.png
 void displayBatteryLevel() {
-
   float voltage = (9 * analogRead(batteryPin)) / 1024;
   if (voltage < 6) {
     digitalWrite(batteryLEDPin[0], HIGH);
@@ -54,8 +55,8 @@ int getSensorValue() {
     tmpSensor = tmpSensor + analogRead(sensorPin);
     delay(10);
   }
-  sensorValue = tmpSensor / 10;
-  return sensorValue;
+
+  return (tmpSensor / 10);
 }
 
 // set value at which alarm starts
@@ -66,6 +67,8 @@ int calcSensitivity() {
   int tmpValue = 0;
   int sensitivity = 0;
 
+  digitalWrite(batteryLEDPin[0], HIGH);
+
   for (int i = 0; i < 100; i++) {
     // 100 readings over 10 minutes, 0.1 sec delay
     tmpValue = getSensorValue();
@@ -75,7 +78,10 @@ int calcSensitivity() {
     } else if (minReading > tmpValue) {
       minReading = tmpValue;
     }
+    delay(100);
+    digitalWrite(batteryLEDPin[0], !digitalRead(batteryLEDPin[0]));
   }
+  digitalWrite(batteryLEDPin[0], LOW);
 
   int avgReading = totalReading / 100;
   sensitivity = maxReading * 1.1;

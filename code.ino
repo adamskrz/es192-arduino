@@ -1,16 +1,6 @@
 // Adding helper functions
-#include "eeprom_helpers.h"
-#include "functions.h"
-
-// Global
-const byte sensorPin = A0;
-// const byte sensitivtyPin = A1;
-const byte batteryPin = A1;
-int sensorValue = 0;
-int sensitivity;
-const byte batteryLEDPin[] = {8, 9, 10, 11};
-const byte batteryButtonPin = 2;
-const byte resetButtonPin = 3;
+#include "HelperFunctions.h"
+#include "HelperFunctions.cpp" //remove for actual compilation
 
 // the setup function runs once when you press reset or power the board
 void setup() {
@@ -27,12 +17,12 @@ void setup() {
 
   float sensorValue = 0;
   const byte sensorPin = A0;
-
   // set sensitivity from EEPROM
   sensitivity = readIntFromEEPROM(0);
   if (sensitivity == 32767) {
     // if sensitivity never set, calibrate
-    setSensitivity();
+    sensitivity = calcSensitivity(); // Blocks for 10 minutes!!
+    writeIntIntoEEPROM(0, sensitivity);
   }
 }
 
@@ -45,7 +35,7 @@ void loop() {
     if (digitalRead(batteryButtonPin) == HIGH) {
       delay(3000);
       if (digitalRead(batteryButtonPin) == HIGH) {
-        setSensitivity();
+        calcSensitivity();
       }
     }
   }

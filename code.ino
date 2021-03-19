@@ -6,10 +6,9 @@ const byte sensorPin = A0;
 const byte batteryPin = A1;
 int sensorValue = 0;
 int sensitivity;
-const byte batteryPin1 = 8;
-const byte batteryPin2 = 9;
-const byte batteryPin3 = 10;
-const byte batteryPin4 = 11;
+const byte batteryLEDPin[] = {8,9,10,11};
+const byte batteryButtonPin = 2;
+const byte resetButtonPin = 3;
 
 // the setup function runs once when you press reset or power the board
 void setup() {
@@ -18,10 +17,10 @@ void setup() {
   pinMode(sensorPin, INPUT); // initialise sensor connection as input
   pinMode(batteryPin, INPUT); // initialise sensor connection as input 
 
-  pinMode(batteryPin1, OUTPUT); // Battery LEDs
-  pinMode(batteryPin2, OUTPUT);
-  pinMode(batteryPin3, OUTPUT);
-  pinMode(batteryPin4, OUTPUT);
+  pinMode(batteryLEDPin[0], OUTPUT); // Battery LEDs
+  pinMode(batteryLEDPin[1], OUTPUT);
+  pinMode(batteryLEDPin[2], OUTPUT);
+  pinMode(batteryLEDPin[3], OUTPUT);
 
   float sensorValue = 0;
   const byte sensorPin = A0;
@@ -52,25 +51,25 @@ int readIntFromEEPROM(int address) {
 void displayBatteryLevel() {
   float voltage = (9 * analogRead(batteryPin)) / 1024;
   if (voltage < 6) {
-    digitalWrite(batteryPin1, HIGH);
-    digitalWrite(batteryPin2, LOW);
-    digitalWrite(batteryPin3, LOW);
-    digitalWrite(batteryPin4, LOW);
+    digitalWrite(batteryLEDPin[0], HIGH);
+    digitalWrite(batteryLEDPin[1], LOW);
+    digitalWrite(batteryLEDPin[2], LOW);
+    digitalWrite(batteryLEDPin[3], LOW);
   } else if (voltage < 7) {
-    digitalWrite(batteryPin1, HIGH);
-    digitalWrite(batteryPin2, HIGH);
-    digitalWrite(batteryPin3, LOW);
-    digitalWrite(batteryPin4, LOW);
+    digitalWrite(batteryLEDPin[0], HIGH);
+    digitalWrite(batteryLEDPin[1], HIGH);
+    digitalWrite(batteryLEDPin[2], LOW);
+    digitalWrite(batteryLEDPin[3], LOW);
   } else if (voltage < 7.5) {
-    digitalWrite(batteryPin1, HIGH);
-    digitalWrite(batteryPin2, HIGH);
-    digitalWrite(batteryPin3, HIGH);
-    digitalWrite(batteryPin4, LOW);
+    digitalWrite(batteryLEDPin[0], HIGH);
+    digitalWrite(batteryLEDPin[1], HIGH);
+    digitalWrite(batteryLEDPin[2], HIGH);
+    digitalWrite(batteryLEDPin[3], LOW);
   } else {
-    digitalWrite(batteryPin1, HIGH);
-    digitalWrite(batteryPin2, HIGH);
-    digitalWrite(batteryPin3, HIGH);
-    digitalWrite(batteryPin4, HIGH);
+    digitalWrite(batteryLEDPin[0], HIGH);
+    digitalWrite(batteryLEDPin[1], HIGH);
+    digitalWrite(batteryLEDPin[2], HIGH);
+    digitalWrite(batteryLEDPin[3], HIGH);
   }
 
   delay (1000);

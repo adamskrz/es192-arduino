@@ -6,7 +6,6 @@
 const byte sensorPin = A0;
 // const byte sensitivtyPin = A1;
 const byte batteryPin = A1;
-int sensorValue = 0;
 int sensitivity;
 const byte batteryLEDPin[] = {8, 9, 10, 11};
 const byte batteryButtonPin = 2;
@@ -59,15 +58,6 @@ int getSensorValue() {
   return sensorValue;
 }
 
-bool wet() {
-  extern int sensitivity;
-  if (getSensorValue() > sensitivity) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
 // set value at which alarm starts
 int calcSensitivity() {
   unsigned long totalReading = 0;
@@ -93,7 +83,7 @@ int calcSensitivity() {
   return sensitivity;
 }
 
-int calcLEDDelay() {
+int calcLEDDelay(int sensorValue) {
   // above maxSensorValue, the LED blink will not increase
   int maxSensorVal = 1500;
   int minBlinkDelay = 50;

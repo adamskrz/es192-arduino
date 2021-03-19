@@ -15,8 +15,6 @@ void setup() {
   pinMode(batteryLEDPin[2], OUTPUT);
   pinMode(batteryLEDPin[3], OUTPUT);
 
-  float sensorValue = 0;
-  const byte sensorPin = A0;
   // set sensitivity from EEPROM
   sensitivity = readIntFromEEPROM(0);
   if (sensitivity == 32767) {
@@ -28,21 +26,28 @@ void setup() {
 
 // the loop function runs over and over again forever
 void loop() {
+  
+  // If the battery indicator button is pressed
   if (digitalRead(batteryButtonPin) == HIGH) {
+    // Show current power level for 1 second then clear
     displayBatteryLevel();
     delay(1000);
     clearBatteryLEDs();
+
+    // if still pressed after 1 second, wait another 4 seconds and run calibration if still pressed
     if (digitalRead(batteryButtonPin) == HIGH) {
-      delay(3000);
+      delay(4000);
       if (digitalRead(batteryButtonPin) == HIGH) {
         calcSensitivity();
       }
     }
   }
 
-  if (wet()) {
+  int sensorValue = getSensorValue();
+
+  if (sensorValue > sensitivity) {
     digitalWrite(LED_BUILTIN, HIGH);
-    int delay_time = calcLEDDelay();
+    int delay_time = calcLEDDelay(sensorValue);
     delay(delay_time);
     digitalWrite(LED_BUILTIN, LOW);
     delay(delay_time);

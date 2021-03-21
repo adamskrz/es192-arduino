@@ -9,9 +9,12 @@ const byte batteryPin = A1;
 const byte batteryLEDPin[] = {8, 9, 10, 11};
 const byte batteryButtonPin = 2;
 const byte resetButtonPin = 3;
+const byte mainLEDpin = 5;
+const byte buzzerPin = 6;
 
 // Very rarely set so keeping as global
 int sensitivity;
+boolean alarmOn = false;
 
 // Battery discharge reference
 // https://www.powerstream.com/z/9v-100ma-discharge-tests.png
@@ -103,4 +106,9 @@ int calcLEDDelay(int sensorValue) {
         1 - ((sensorValue - sensitivity) / (maxSensorVal - sensitivity));
     return (maxSensorVal - (scale * (maxBlinkDelay - minBlinkDelay)));
   }
+}
+
+void disableAlarm() {
+  alarmOn = false;
+  digitalWrite(mainLEDpin, LOW);
 }

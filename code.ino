@@ -4,13 +4,17 @@
 
 // the setup function runs once when you press reset or power the board
 void setup() {
-  pinMode(mainLEDpin,
-          OUTPUT);  // initialise digital pin LED_BUILTIN as an output.
+  // initialise I/O pins.
+  pinMode(mainLEDpin, OUTPUT);
+  pinMode(buzzerPin, OUTPUT);
+  pinMode(sensorPin, INPUT);
+  pinMode(batteryPin, INPUT);
+  pinMode(batteryButtonPin, INPUT);
+  pinMode(LEDBrightnessPin, INPUT);
+  pinMode(buzzerVolumePin, INPUT);
 
-  pinMode(sensorPin, INPUT);   // initialise sensor connection as input
-  pinMode(batteryPin, INPUT);  // initialise sensor connection as input
-
-  pinMode(batteryLEDPin[0], OUTPUT);  // Battery LEDs
+  // Battery LEDs
+  pinMode(batteryLEDPin[0], OUTPUT);
   pinMode(batteryLEDPin[1], OUTPUT);
   pinMode(batteryLEDPin[2], OUTPUT);
   pinMode(batteryLEDPin[3], OUTPUT);
@@ -49,7 +53,9 @@ void loop() {
 
   int sensorValue = getSensorValue();
 
-  int brightness = map(sensorValue, 0, 1023, 0, 255);
+  // Map the user settings of brightness and voulme to values
+  int LEDbrightness = map(analogRead(LEDBrightnessPin), 0, 1023, 0, 255);
+  int buzzerVolume = map(analogRead(buzzerVolumePin), 0, 1023, 0, 255);
 
   if (alarmOn && sensorValue < sensitivity) {
     alarmOn = false;
@@ -58,7 +64,9 @@ void loop() {
   }
 
   while (alarmOn) {
-    analogWrite(mainLEDpin, brightness);
+    sensorValue = getSensorValue();
+    analogWrite(mainLEDpin, LEDbrightness);
+    analogWrite(mainLEDpin, buzzerVolume);
     int delay_time = calcLEDDelay(sensorValue);
     if (!alarmOn) break;
     delay(delay_time);
@@ -67,7 +75,7 @@ void loop() {
     if (!alarmOn) break;
     delay(delay_time);
     if (sensorValue < sensitivity) {
-      alarmOn = false;
+      disableAlarm();
     }
   }
 }

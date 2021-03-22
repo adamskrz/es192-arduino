@@ -1,6 +1,6 @@
 # ES192 Project Arduino code
 
-This repo contains Arduino code for my Electronics Sprint Porject for ES192 Engineering Design
+This repo contains Arduino code for my Electronics Sprint Project for ES192 Engineering Design
 
 ## To-Do
 

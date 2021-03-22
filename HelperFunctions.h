@@ -4,6 +4,8 @@
 // Global variables
 const extern byte sensorPin;
 const extern byte batteryPin;
+const extern byte buzzerVolumePin;
+const extern byte LEDBrightnessPin;
 extern int sensitivity;
 extern boolean alarmOn;
 extern const byte batteryLEDPin[];
